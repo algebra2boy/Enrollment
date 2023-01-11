@@ -1,0 +1,22 @@
+initializing the virtual environment 
+$ python3 -m venv venv
+
+activate the virtual enviornment 
+$source venv/bin/activate or .venv/bin/activate
+
+deactivate the virtual env 
+$ deactivate
+
+installments 
+$ pip install flask
+$ pip install flask-wtf
+$ pip install python-dotenv -> need this for the .flaskenv
+
+Showing all dependencies 
+$ pip list
+
+pipe the dependencies
+$ pip freeze > requirements.txt
+
+download the dependencies
+$ pip install -r requirements.txt
