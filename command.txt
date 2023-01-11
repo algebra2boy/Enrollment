@@ -20,3 +20,9 @@ $ pip freeze > requirements.txt
 
 download the dependencies
 $ pip install -r requirements.txt
+
+Jinja delimiters
+{%...%} - Statements
+{{...}} - Expressions
+{#...#} - Comments 
+Jinja is a way to communicate between the front and the bacn end 

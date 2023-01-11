@@ -2,6 +2,5 @@ from flask import Flask
 
 app = Flask(__name__)
 
-@app.route("/")
-def index():
-    return "<h1> Hello Earth! </h1>"
+# this has to be at the bottom so it does not circulate 
+from application import routes
