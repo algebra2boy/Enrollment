@@ -25,4 +25,12 @@ Jinja delimiters
 {%...%} - Statements
 {{...}} - Expressions
 {#...#} - Comments 
-Jinja is a way to communicate between the front and the bacn end 
+Jinja is a way to communicate between the front and the back end
+redirect link to python routers in flask using {{ url_for('the name of the function ') }}
+
+{% extends "the name of html file" %} means adding the html block from current file to another file 
+    for example {% extends "layout.html" %} 
+
+These following two lines specify the blocks where to put the extra html file 
+{% block content %}
+{% endblock %}
