@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+        <div class="col-md-12 text-center">
+            <h1>You are enrolled!</h1>
+            <!-- must match with the name of object from the place where it is called
+            check routes.py -->
+            <p>Course ID: {{course_data['id']}} </p>
+            <p>Course title: {{course_data['title']}} </p>
+            <p>Course term: {{course_data['term']}} </p>
+        </div>
+</div>
+{% endblock %}
+
