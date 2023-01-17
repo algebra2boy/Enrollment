@@ -34,3 +34,13 @@ redirect link to python routers in flask using {{ url_for('the name of the funct
 These following two lines specify the blocks where to put the extra html file 
 {% block content %}
 {% endblock %}
+
+
+MongoDB shell commands 
+$ db.createCollection (<collection>)
+$ db.<collection>.insert( { ... } )
+$ db.<collection>.insertMany ( {...} )
+
+inserting JSON data using the mongoimport.exe via command line 
+$ mongoimport --db <DB> -collection <collection> --file file
+$ mongoimport -db <DB> -c <collection> --file file

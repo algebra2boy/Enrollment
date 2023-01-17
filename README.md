@@ -17,4 +17,5 @@ $ show dbs
 ```
 
 ## Set up
-[Download MongoDB Compass Download](https://www.mongodb.com/try/download/compass)
+[Download MongoDB Compass](https://www.mongodb.com/try/download/compass)
+[Flask configuration with MongoEngine](http://docs.mongoengine.org/projects/flask-mongoengine/en/latest/flask_config.html)
