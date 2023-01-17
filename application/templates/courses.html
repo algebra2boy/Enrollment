@@ -31,7 +31,7 @@
                 <td>{{course["term"]}}</td>
                 <td>
                     <!-- passing data from front end to back end to enrollment url link using GET  -->
-                    <form action="{{ url_for('enrollment') }}" method = "GET">
+                    <form action="{{ url_for('enrollment') }}" method = "POST">
                         <input type="hidden" name="courseID" value="{{course['courseID']}}">
                         <input type="hidden" name="title" value="{{course['title']}}">
                         <input type="hidden" name="term" value="{{course['term']}}">

@@ -15,3 +15,6 @@ $ brew services start mongodb/brew/mongodb-community
 $ mongosh
 $ show dbs
 ```
+
+## Set up
+[Download MongoDB Compass Download](https://www.mongodb.com/try/download/compass)

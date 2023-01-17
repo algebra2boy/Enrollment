@@ -1,6 +1,5 @@
-from application import app
+from application import app, db
 from flask import Response, render_template, request,json # use to render html file and pass data 
-
 
 courseData = [{"courseID":"1111","title":"PHP 111","description":"Intro to PHP","credits":"3","term":"Fall, Spring"}, 
                  {"courseID":"2222","title":"Java 1","description":"Intro to Java Programming","credits":"4","term":"Spring"}, 
@@ -55,7 +54,28 @@ def api(id=None):
             if course['courseID'] == id:
                 json_data = course
                 break
-    
+            
+    # can use contentype as sell
     return Response(json.dumps(json_data),
                     mimetype="application/json")
 
+
+class User(db.Document):
+    user_id     = db.IntField(unique=True)
+    first_name  = db.StringField(max_length = 50)
+    last_name   = db.StringField(max_length = 50)
+    email       = db.StringField(max_length = 30)
+    password    = db.StringField(max_length = 30)
+
+
+@app.route("/user")
+def user():
+    # manually creating users
+    User(user_id = 1, first_name = "Yongye", last_name = "Tan",
+                email = "yongye0997@gmail.com", password = "qwer1234").save()
+    
+    User(user_id = 2, first_name = "Tina", last_name = "Zou",
+                email = "tzou@gmail.com", password = "qwer2345").save()
+    
+    users = User.objects.all()
+    return render_template("user.html", users=users)
