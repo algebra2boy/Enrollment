@@ -44,3 +44,11 @@ $ db.<collection>.insertMany ( {...} )
 inserting JSON data using the mongoimport.exe via command line 
 $ mongoimport --db <DB> -collection <collection> --file file
 $ mongoimport -db <DB> -c <collection> --file file
+
+Flask-WTF
+- provides common security and authentication features
+    - session-based authentication
+    - password hashing
+    - basic HTTP and token-based authentications
+    - User registration
+    - Login tracking (Flask-login)

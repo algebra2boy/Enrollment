@@ -1,5 +1,6 @@
 from application import app, db
 from flask import Response, render_template, request,json # use to render html file and pass data 
+from application.forms import LoginForm, RegisterForm 
 from application.model import User, Course, Enrollment
 
 courseData = [{"courseID":"1111","title":"PHP 111","description":"Intro to PHP","credits":"3","term":"Fall, Spring"}, 
@@ -24,9 +25,10 @@ def courses(term = "Spring 2020"):
 def register():
     return render_template("register.html", register=True)
 
-@app.route("/login")
+@app.route("/login", methods = ["GET", "POST"])
 def login():
-    return render_template("login.html", login=True)
+    form = LoginForm()
+    return render_template("login.html", login=True, login_form = form, title = "Login")
 
 @app.route("/enrollment", methods = ["GET", "POST"])
 def enrollment():
