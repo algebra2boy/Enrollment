@@ -1,5 +1,5 @@
 from application import app, db
-from flask import Response, render_template, request,json # use to render html file and pass data 
+from flask import Response, render_template, request,json, redirect, flash # use to render html file and pass data 
 from application.forms import LoginForm, RegisterForm 
 from application.model import User, Course, Enrollment
 
@@ -28,6 +28,14 @@ def register():
 @app.route("/login", methods = ["GET", "POST"])
 def login():
     form = LoginForm()
+
+    # if submit button is being pressed
+    if form.validate_on_submit():
+        if request.form.get('email') == "yongye@email.com":
+            flash("You have successfully logged in", "success")
+            return redirect('/index')
+        else: 
+            flash("Your email is not found in the database", "danger")
     return render_template("login.html", login=True, login_form = form, title = "Login")
 
 @app.route("/enrollment", methods = ["GET", "POST"])
