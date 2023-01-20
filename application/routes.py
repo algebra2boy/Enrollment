@@ -23,12 +23,12 @@ def courses(term = "Spring 2020"):
 
 @app.route("/register")
 def register():
-    return render_template("register.html", register=True)
+    form = RegisterForm()
+    return render_template("register.html", register=True, register_form = form)
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
     form = LoginForm()
-
     # if submit button is being pressed
     if form.validate_on_submit():
         if request.form.get('email') == "yongye@email.com":

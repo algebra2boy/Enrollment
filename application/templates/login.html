@@ -1,35 +1,38 @@
 {% extends "layout.html" %}
    
 {% block content %}
-    <h1>{{ title }}</h1>
 
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <h3></h3>
             <form name="login" action="" method = "post" novalidate>
+                <!--  The <fieldset> HTML element is used to group several controls -->
+                <fieldset class ="form-group">
+                    <legend>{{ title }}</legend>
                 <!-- the hidden tag hides the csrf token  to ensure security  -->
-                {{ login_form.hidden_tag() }}
+                    {{ login_form.hidden_tag() }}
 
-                <p>
-                    {{ login_form.email.label }}
-                    {{ login_form.email(size = 35) }}
-                    {%  for error in login_form.email.errors   %}
-                        <span class = "error-message">{{error}}</span>
-                    {% endfor %}
-                </p>
+                    <p>
+                        {{ login_form.email.label }}
+                        {{ login_form.email(size = 35) }}
+                        {%  for error in login_form.email.errors   %}
+                            <span class = "error-message">{{error}}</span>
+                        {% endfor %}
+                    </p>
 
-                <p>
-                    {{ login_form.password.label }}
-                    {{ login_form.password(size = 100) }}
-                    {%  for error in login_form.password.errors   %}
-                        <span class = "error-message">{{error}}</span>
-                        
-                    {% endfor %}
-                </p>
+                    <p>
+                        {{ login_form.password.label }}
+                        {{ login_form.password(size = 100) }}
+                        {%  for error in login_form.password.errors   %}
+                            <span class = "error-message">{{error}}</span>
+                            
+                        {% endfor %}
+                    </p>
 
-                <p>
-                    {{ login_form.submit() }}
-                </p>
+                    <p>
+                        {{ login_form.submit() }}
+                    </p>
+                </fieldset>
             </form>
         </div>
     </div>
