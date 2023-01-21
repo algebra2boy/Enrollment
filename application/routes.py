@@ -1,13 +1,13 @@
 from application import app, db
-from flask import Response, render_template, request,json, redirect, flash # use to render html file and pass data 
+from flask import Response, render_template, request,json, redirect, flash, url_for # use to render html file and pass data 
 from application.forms import LoginForm, RegisterForm 
 from application.model import User, Course, Enrollment
 
-courseData = [{"courseID":"1111","title":"PHP 111","description":"Intro to PHP","credits":"3","term":"Fall, Spring"}, 
-                 {"courseID":"2222","title":"Java 1","description":"Intro to Java Programming","credits":"4","term":"Spring"}, 
-                 {"courseID":"3333","title":"Adv PHP 201","description":"Advanced PHP Programming","credits":"3","term":"Fall"}, 
-                 {"courseID":"4444","title":"Angular 1","description":"Intro to Angular","credits":"3","term":"Fall, Spring"}, 
-                 {"courseID":"5555","title":"Java 2","description":"Advanced Java Programming","credits":"4","term":"Fall"}]
+courseData = [{"courseID":"1111","title":"CS 453","description":"Networks","credits":"3","term":"Fall, Spring"}, 
+                 {"courseID":"2222","title":"CS 589","description":"Machine Learning","credits":"3","term":"Spring"}, 
+                 {"courseID":"3333","title":"CS 326","description":"Web Design","credits":"4","term":"Fall"}, 
+                 {"courseID":"4444","title":"Math 545","description":"Linear Algebra for Applied Mathematics","credits":"3","term":"Fall, Spring"}, 
+                 {"courseID":"5555","title":"Music 150","description":"Lively Arts","credits":"4","term":"Fall"}]
 
 @app.route("/")
 @app.route("/index")
@@ -21,18 +21,43 @@ def courses(term = "Spring 2020"):
     # pass data from python to the html view
     return render_template("courses.html", courseData=courseData, course = True, term = term)
 
-@app.route("/register")
+@app.route("/register", methods = ["GET", "POST"])
 def register():
     form = RegisterForm()
-    return render_template("register.html", register=True, register_form = form)
+
+    if form.validate_on_submit():
+        user_id  = User.objects.count() # find the total count of user
+        user_id  += 1   
+
+        email       = form.email.data
+        password    = form.password.data
+        first_name  = form.first_name.data
+        last_name   = form.last_name.data
+        print(user_id, email, password, first_name, last_name)
+        # setting up a user with hashed password and then save it 
+        user = User(user_id=user_id, email=email, first_name=first_name, last_name=last_name)
+        user.set_hash_password(password=password)
+        user.save()
+        flash(f"{first_name} is successfully registered", "success")
+        return redirect('/index')
+
+    return render_template("register.html", register=True, register_form = form, title = "New User Registration")
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
     form = LoginForm()
+
     # if submit button is being pressed
     if form.validate_on_submit():
-        if request.form.get('email') == "yongye@email.com":
-            flash("You have successfully logged in", "success")
+
+        # validate user's email and passsword
+        email = form.email.data
+        password = form.password.data
+        # retrieve the first object in the User array 
+        user = User.objects(email=email).first()
+
+        if user and user.password == password:
+            flash(f"{user.first_name} have successfully logged in!!", "success")
             return redirect('/index')
         else: 
             flash("Your email is not found in the database", "danger")

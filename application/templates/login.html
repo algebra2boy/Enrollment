@@ -13,18 +13,20 @@
                     {{ login_form.hidden_tag() }}
 
                     <p>
-                        {{ login_form.email.label }}
-                        {{ login_form.email(size = 35) }}
+                        {{ login_form.email.label }} <br>
+                        {{ login_form.email(size = 35) }} <br>
                         {%  for error in login_form.email.errors   %}
-                            <span class = "error-message">{{error}}</span>
+                            <span class = "error-message"> {{error}} </span>
                         {% endfor %}
                     </p>
 
                     <p>
-                        {{ login_form.password.label }}
-                        {{ login_form.password(size = 100) }}
+                        {{ login_form.password.label }} <br>
+                        {{ login_form.password(size = 100) }} <br>
                         {%  for error in login_form.password.errors   %}
-                            <span class = "error-message">{{error}}</span>
+                            <span class = "error-message">
+                                {{error}}
+                            </span>
                             
                         {% endfor %}
                     </p>

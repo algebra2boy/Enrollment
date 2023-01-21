@@ -2,60 +2,52 @@
 {% extends "layout.html" %}
    
 {% block content %}
-    <h2>New User Registration</h2>
-
     <div class="container">
         <form name="register" action="" method="post" novalidate>
             <fieldset class="form-group">
                 <legend>{{title}}</legend>
+                
+                {{ register_form.hidden_tag() }}
                 <p>
                     {{register_form.email.label}} <br>
-                    {{register_form.email}}
+                    {{register_form.email}} <br>
                     {% for error in register_form.email.errors %}
                         <span class="error-message">
                             {{ error }}
                         </span>
-                    {{ endfor }}
+                    {% endfor %}
                 </p>
                 
                 <p>
                     {{register_form.password.label}} <br>
-                    {{register_form.password}}
+                    {{register_form.password}} <br>
                     {% for error in register_form.password.errors %}
-                        <span class="error-message">
-                            {{ error }}
-                        </span>
-                    {{ endfor }}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
                 </p>
 
                 <p>
                     {{register_form.password_confirmed.label}} <br>
-                    {{register_form.password_confirmed}}
+                    {{register_form.password_confirmed}} <br>
                     {% for error in register_form.password_confirmed.errors %}
-                        <span class="error-message">
-                            {{ error }}
-                        </span>
-                    {{ endfor }}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
                 </p>
 
                 <p>
                     {{register_form.first_name.label}} <br>
-                    {{register_form.first_name}}
+                    {{register_form.first_name}} <br>
                     {% for error in register_form.first_name.errors %}
-                        <span class="error-message">
-                            {{ error }}
-                        </span>
-                    {{ endfor }}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
                 </p>
 
                 <p>
                     {{register_form.last_name.label}} <br>
-                    {{register_form.last_name}}
+                    {{register_form.last_name}} <br>
                     {% for error in register_form.last_name.errors %}
-                        <span class="error-message">
-                            {{ error }}
-                        </span>
-                    {{ endfor }}
+                        <span class="error-message">{{ error }} </span>
+                    {% endfor %}
                 </p>
 
                 <p>
