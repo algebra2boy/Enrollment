@@ -1,7 +1,9 @@
+from copy import deepcopy
 from application import app, db
 from flask import Response, render_template, request,json, redirect, flash, url_for # use to render html file and pass data 
 from application.forms import LoginForm, RegisterForm 
 from application.model import User, Course, Enrollment
+from data.aggregation_pipeline import pipeline
 
 # retrieve the all the classes from the MongoDB
 # sort by courseID from smallest to biggest using the + sign 
@@ -86,7 +88,10 @@ def enrollment():
             Enrollment(user_id=user_id, courseID=courseID).save()
             flash(f"You are enrolled in {courseID}!", "success")
 
-    classes = None
+    deep_copy_pipeline = deepcopy(pipeline)
+    deep_copy_pipeline[4]["$match"]["user_id"] = user_id
+
+    classes = list(User.objects.aggregate(*deep_copy_pipeline))
 
     return render_template("enrollment.html", 
                             enrollment=True,
