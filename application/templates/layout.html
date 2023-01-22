@@ -19,6 +19,10 @@
 
     {% include "includes/nav.html" %}
 
+    {% if session['username'] %}
+        <span class = "username-display">Welcome, {{ session['username']  }}</span>
+    {% endif %}
+
     {% with messages = get_flashed_messages(with_categories=true)      %}
         {% if messages %}
             {%  for category, message in messages  %} 

@@ -98,3 +98,12 @@ footer {
 .error-message {
     color: green;
 }
+
+.username-display {
+    float: right;
+    position: absolute;
+    font-size: 25px;
+    right: 10px;
+    top: 4em;
+    color: purple;
+}

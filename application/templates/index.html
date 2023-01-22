@@ -5,11 +5,20 @@
         <div class="col-md-12 text-center">
             <h1>Welcome to University of Massachusetts Amherst!</h1>
             
-            {% if login %}
-            <h3>Let's get started.</h3>
+            {% if session['username'] %}
+                <h3>Let's get started.</h3>
             {% else %}
-            <p>Already registered? <a href="{{ url_for('login') }}">Login</a></p>
+                <p>Already registered? <a href="{{ url_for('login') }}">Login</a></p>
             {% endif %}
+
+            <div style="text-align: left;">
+                <h2>What is this website about?</h2>
+
+                <p>
+                    I am learning how to use various feature in flask to make a simple website.
+                </p>
+            </div>
+
 
         </div>
 </div>

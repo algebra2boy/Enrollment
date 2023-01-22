@@ -1,6 +1,6 @@
 from copy import deepcopy
 from application import app, db
-from flask import Response, render_template, request,json, redirect, flash, url_for # use to render html file and pass data 
+from flask import Response, render_template, request,json, redirect, flash, url_for, session # use to render html file and pass data 
 from application.forms import LoginForm, RegisterForm 
 from application.model import User, Course, Enrollment
 from data.aggregation_pipeline import pipeline
@@ -26,6 +26,10 @@ def courses(term = None):
 
 @app.route("/register", methods = ["GET", "POST"])
 def register():
+    # user is already registered, no need to go to resgister page
+    if session.get('username'):
+        return redirect(url_for('index'))
+
     form = RegisterForm()
 
     if form.validate_on_submit():
@@ -48,6 +52,10 @@ def register():
 
 @app.route("/login", methods = ["GET", "POST"])
 def login():
+    # if the user is logged in already, no need to let the user to login in again, instead redirect the user to the home page again
+    if session.get('username'):
+        return redirect(url_for('index'))
+
     form = LoginForm()
 
     # if submit button is being pressed
@@ -59,21 +67,38 @@ def login():
         # retrieve the first object in the User array 
         user = User.objects(email=email).first()
 
-        if user and user.password == password:
+        if user and user.get_hash_password(password):
             flash(f"{user.first_name} have successfully logged in!!", "success")
+
+            # share information across the site
+            session['user_id'] = user.user_id
+            session['username'] = user.first_name
+            
             return redirect('/index')
         else: 
             flash("Your email is not found in the database", "danger")
     return render_template("login.html", login=True, login_form = form, title = "Login")
 
+@app.route("/logout")
+def logout():
+    # deleting the session variable
+    session['user_id'] = False
+    session.pop("username", None)
+    return redirect(url_for('index'))
+
+
 @app.route("/enrollment", methods = ["GET", "POST"])
 def enrollment():
+    # the user has not logged in yet
+    if not session.get('username'):
+        return redirect(url_for('index'))
+
     # print(request.args)
     # request.args.get('courseID') -> use this if we only using GET
     courseID = request.form.get('courseID')
     course_title = request.form.get('title')
     term = request.form.get('term')
-    user_id = 1
+    user_id = session.get('user_id')
 
     single_course_data = {"id": courseID,
                             "title": course_title,
