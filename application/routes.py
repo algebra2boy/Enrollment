@@ -3,11 +3,10 @@ from flask import Response, render_template, request,json, redirect, flash, url_
 from application.forms import LoginForm, RegisterForm 
 from application.model import User, Course, Enrollment
 
-courseData = [{"courseID":"1111","title":"CS 453","description":"Networks","credits":"3","term":"Fall, Spring"}, 
-                 {"courseID":"2222","title":"CS 589","description":"Machine Learning","credits":"3","term":"Spring"}, 
-                 {"courseID":"3333","title":"CS 326","description":"Web Design","credits":"4","term":"Fall"}, 
-                 {"courseID":"4444","title":"Math 545","description":"Linear Algebra for Applied Mathematics","credits":"3","term":"Fall, Spring"}, 
-                 {"courseID":"5555","title":"Music 150","description":"Lively Arts","credits":"4","term":"Fall"}]
+# retrieve the all the classes from the MongoDB
+# sort by courseID from smallest to biggest using the + sign 
+# courseData = Course.objects.all()
+courseData = Course.objects.order_by("courseID")
 
 @app.route("/")
 @app.route("/index")
@@ -17,7 +16,9 @@ def index():
 
 @app.route("/courses/")
 @app.route("/courses/<term>")
-def courses(term = "Spring 2020"):
+def courses(term = None):
+    if term == None:
+        term = "Spring 2023"
     # pass data from python to the html view
     return render_template("courses.html", courseData=courseData, course = True, term = term)
 
@@ -68,16 +69,30 @@ def enrollment():
     # print(request.args)
     # request.args.get('courseID') -> use this if we only using GET
     courseID = request.form.get('courseID')
-    title = request.form.get('title')
+    course_title = request.form.get('title')
     term = request.form.get('term')
+    user_id = 1
 
-    course_data = {"id": courseID,
-                            "title": title,
+    single_course_data = {"id": courseID,
+                            "title": course_title,
                             "term": term}
+    # coming from the course page
+    if courseID:
+        if Enrollment.objects(user_id=user_id, courseID=courseID):
+            flash(f"You are already registered in {course_title}!", "danger")
+            return redirect(url_for('courses'))
+        else: 
+            # add the collection entry to MongoDB
+            Enrollment(user_id=user_id, courseID=courseID).save()
+            flash(f"You are enrolled in {courseID}!", "success")
+
+    classes = None
 
     return render_template("enrollment.html", 
                             enrollment=True,
-                            course_data = course_data)
+                            course_data = single_course_data,
+                            title = "Enrollment",
+                            classes = classes)
 
 @app.route("/api/")
 @app.route("/api/<id>")

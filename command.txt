@@ -52,3 +52,8 @@ Flask-WTF
     - basic HTTP and token-based authentications
     - User registration
     - Login tracking (Flask-login)
+
+Aggregation Pipeline Stages
+$lookup: Performs a left outer join
+$match: Filters documents
+$unwind: Deconstructs an array field

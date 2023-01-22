@@ -6,7 +6,7 @@
         <form name="register" action="" method="post" novalidate>
             <fieldset class="form-group">
                 <legend>{{title}}</legend>
-                
+                <!-- hidden_tag must be included -->
                 {{ register_form.hidden_tag() }}
                 <p>
                     {{register_form.email.label}} <br>
